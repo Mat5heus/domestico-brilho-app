@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Doméstico Brilho (Beta)</string>
+    <string name="title_activity_main">Doméstico Brilho</string>
+    <string name="package_name">com.domesticobrilho.app</string>
+    <string name="custom_url_scheme">com.domesticobrilho.app</string>
+</resources>

@@ -1,0 +1,20 @@
+{
+  "appId": "com.domesticobrilho.app",
+  "appName": "Doméstico Brilho",
+  "webDir": "dist",
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "SplashScreen": {
+      "launchShowDuration": 5000,
+      "launchAutoHide": true,
+      "splashFullScreen": true,
+      "androidSplashResourceName": "splash.png",
+      "splashImmersive": true,
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true,
+      "androidSpinnerStyle": "large"
+    }
+  }
+}

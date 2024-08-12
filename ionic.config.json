@@ -1,0 +1,7 @@
+{
+  "name": "Doméstico Brilho",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
