@@ -1,45 +1,28 @@
 <template>
-  <modal-head :name="product.name" />
+  <modal-head :name="products.list" />
   <ion-content>
-    <ion-img :src="formatUrl(product.image)" :alt="product.name"/>
-
-    <h6 id="figcaption">(Foto e descrição meramente ilustrativas)</h6>
-    
-    <ion-text color="dark">
-      <h5 id="title">{{ product.name }}</h5>
-      <br>
-      <h6 class="description-title">Descrição:</h6>
-      <p id="description">{{ product.desc }}</p>
-      <br>
-      <p class="description-title">Última atualização: {{ product.date.toDate() }}</p>
-    </ion-text>
-
-
-    <!--<mainteinance-toast 
-    text="Se alguns dos botões não estiver funcionando, clique aqui." 
-    message="Já estamos trabalhando para resolver o problema, obrigado por avisar!"/>-->
-    
+    <info-description :description="products.list" />
   </ion-content>
   <ion-footer class="call-to-action-footer">
-    <call-to-action :link="product.links"/>
+    <call-to-action :links="products.list"/>
   </ion-footer>
 </template>
 
 <script lang="ts" setup>
-import { formatUrl } from '~/utils/string';
-import { findDocInCollectionAction } from '~/services/actions/product-action';
 import { getKey } from '~/utils/key';
-import type { DocumentData } from 'firebase/firestore';
+import { findProducts } from '~/composables/state/useState';
+import { useDbCall } from '~/composables/api/useDb';
+import type { Reactive } from 'vue';
+import type { Product } from '~/models/Product';
 
-const savedId: string | undefined = await getKey("cod")
-let productsList: DocumentData[] | unknown[] = await findDocInCollectionAction("Products","id","==", Number(savedId))
-let product: DocumentData | unknown = productsList.pop()
+const call = useDbCall()
 
-if(product.name == undefined) {
-  console.log("Segunda tentativa de conectar com o banco")
-  productsList = await findDocInCollectionAction("Products","id","==", Number(savedId))
-  product = productsList.pop()
-}
+const products: Reactive<{ list: Product[] }> = await findProducts(
+  call.getCollection(),
+  call.getField().id,
+  "==",
+  Number(await getKey("cod"))
+)
 
 </script>
 

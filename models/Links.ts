@@ -1,11 +1,9 @@
-import { formatUrl } from "~/utils/string"
-import type { UseLinks } from "~/types/Product"
+import type { LinksData, UseLinks } from "~/types/Product"
 
-
-export class Links implements UseLinks {
+export class Links implements UseLinks, LinksData {
     
-    private aliexpress: string
-    private shopee: string
+    aliexpress: string
+    shopee: string
 
     constructor(links: Links) {
         this.aliexpress = links.aliexpress
@@ -13,11 +11,11 @@ export class Links implements UseLinks {
     }
 
     public getAliexpress() {
-        return formatUrl(this.aliexpress)
+        return this.aliexpress
     }
 
     public getShopee() {
-        return formatUrl(this.shopee)
+        return this.shopee
     }
 
 }

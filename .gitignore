@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# development plan files
+develop-flow

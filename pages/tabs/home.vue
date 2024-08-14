@@ -5,8 +5,8 @@
       <div>
         <img :src="banner"/>
       </div>
-      <slide-component :section_name="$t('title')" :list="weekProducts.list"/>
-      <products-grid :products="randomProducts.list"/>      
+      <slide-test :section_name="$t('title')" :products="weekProducts?.list"/>
+      <products-grid :products="randomProducts?.list"/>      
     </ion-content>
   </ion-page>
 </template>
@@ -23,7 +23,7 @@ const call = useDbCall()
 const weekProducts = await getProductsList(
   call.getCollection(), 
   call.getLimitValue(),
-  call.getOrderByField(), 
+  call.getField().date, 
   call.getOrderByDirection()
 )
 

@@ -1,5 +1,6 @@
-<script lang="ts">
-export function createActionSheetButtons(links: object) {
+import type { Links } from '~/models/Links';
+
+export function createActionSheetButtons(links: Links): object[] {
     return [
         {
             text: 'Comprar no Aliexpress',
@@ -7,28 +8,21 @@ export function createActionSheetButtons(links: object) {
             action: 'Comprar no Aliexpress' 
             },
             handler: () => {
-                open_marketplace(links.aliexpress)
+                openMarketplace(links.getAliexpress())
             }
         },
         {
-            text: 'Comprar no Shopee',
+            text: 'Comprar na Shopee',
             data: {
                 action: "Shopee"
             },
             handler: () => {
-                open_marketplace(links.shopee)
+                openMarketplace(links.getShopee())
             }
         },
     ]
 }
 
-function open_marketplace(url: string) {
+function openMarketplace(url: string) {
   window.open(url)
 }
-
-export default {
-    components: {
-        createActionSheetButtons
-    }
-}
-</script>

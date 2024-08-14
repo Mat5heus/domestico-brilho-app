@@ -1,10 +1,16 @@
 <template>
     <ion-grid>
         <ion-row>
-            <ion-col class="group-of-products" size="6" v-for="item in products" :key="products.id">
+            <ion-col class="group-of-products" size="6" v-for="product in productsList" :key="productsList.id">
                 <figure class="product-img-container">
-                    <img class="product_image" @click="openProductModal(item.id)" :alt="item.name" :src="formatUrl(item.image)" />
-                    <figcaption class="desc-product-image">{{ "#"+item.id+" - "+item.name }}</figcaption>
+                    <img class="product_image" 
+                        @click="openProductInfo(product?.getId().toString())" 
+                        :alt="product?.getName()" 
+                        :src="product?.getImage()"
+                    />
+                    <figcaption class="desc-product-image">
+                        <ion-text>{{ "#"+product?.getId()+" - "+product?.getName() }}</ion-text>
+                    </figcaption>
                 </figure>                
             </ion-col>
         </ion-row>
@@ -12,9 +18,12 @@
 </template>
 
 <script lang="ts" setup>
-import { formatUrl } from '~/utils/string';
-import { openProductModal } from '~/utils/open-modal';
+import { Product } from '~/models/Product';
+import { useIonRouter } from '@ionic/vue';
 
-const products = useAttrs().products
+const router = useIonRouter()
+const openProductInfo = (id: string) => router.navigate('/product/'+id, 'forward', 'push')
+
+const productsList: Product[] = useAttrs().products as Product[]
 
 </script>

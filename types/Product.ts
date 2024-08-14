@@ -1,5 +1,20 @@
-import type { Timestamp } from "firebase/firestore"
+import type { DocumentData, Timestamp } from "firebase/firestore"
 import type { Links } from "~/models/Links"
+
+
+export interface ProductData { 
+    id: number
+    name: string
+    desc: string
+    links: Links
+    image: string
+    date: Timestamp
+}
+
+export interface LinksData {
+    aliexpress: string
+    shopee: string
+}
 
 export interface UseLinks {
     /**
@@ -14,6 +29,7 @@ export interface UseLinks {
      */
     getShopee: () => string
 }
+
 
 export interface UseProduct { 
 
@@ -41,10 +57,16 @@ export interface UseProduct {
      */
     getLinks: () => Links
 
-     /**
+    /**
      * Recupera o data de cadastro do produto
      * @returns a data no tipo `Timestamp` 
      */
     getDate: () => Timestamp
+
+    /**
+     * Recupera a url da imagem do produto
+     * @returns a data no tipo `string` 
+     */
+    getImage: () => string
 
 }

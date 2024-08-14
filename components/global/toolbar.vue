@@ -16,11 +16,11 @@
           <ion-col size="3">
             <ion-buttons>
               <ion-button @click="openNotificationsModal" size="large">
-                <ion-icon slot="icon-only" color="dark" :icon="ioniconsNotifications"/>
+                <ion-icon slot="icon-only" color="dark" :icon="ioniconsNotificationsOutline"/>
                 <ion-badge color="danger"></ion-badge>
               </ion-button>
               <ion-button @click="openHelpModal" size="large">
-                <ion-icon slot="icon-only" color="dark" :icon="ioniconsHelpCircleSharp"/>
+                <ion-icon slot="icon-only" color="dark" :icon="ioniconsHelpCircleOutline"/>
               </ion-button>
             </ion-buttons>
           </ion-col>
@@ -35,11 +35,13 @@
 import { type SearchbarChangeEventDetail } from '@ionic/vue';
 import { openHelpModal, openNotificationsModal } from '~/utils/open-modal';
 
-async function handleInput(event: IonSearchBarCustomEvent<SearchbarChangeEventDetail>): Promise<void>{
+function handleInput(event: IonSearchBarCustomEvent<SearchbarChangeEventDetail>): Promise<void>{
   const query: string = event.target.value
-  if(query != "") {
-    openFoundProductsModal(capitalize(query.toLocaleLowerCase()))
-  }
+  openFoundProductsModal(
+    capitalize(
+      query.toLocaleLowerCase()
+    )
+  )
 }
 
 </script>

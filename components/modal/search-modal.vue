@@ -1,19 +1,23 @@
 <template>
     <modal-head name="Resultados da busca"/>
-    <ProductsGrid :products="productsList"/>
+    <products-grid :products="products.list"/>
 </template>
 
 <script lang="ts" setup>
-import { findDocInCollectionAction } from '~/services/actions/product-action';
-import ProductsGrid from '../page/products-grid.vue';
-import type { DocumentData } from 'firebase/firestore';
 import { getKey } from '~/utils/key';
+import { findProducts } from '~/composables/state/useState';
+import { useDbCall } from '~/composables/api/useDb';
+import type { UseDbCall } from '~/types/db';
+import type { Product } from '~/models/Product';
+import type { Reactive } from 'vue';
 
-let productsList: unknown[] | DocumentData[]
-const query: string | undefined = await getKey("name")
-if(query) {
-    productsList = await findDocInCollectionAction("Products", "name", ">=", query)
-} else {
-    console.error("Não foi possivel recuperar o valor")
-}
+const call: UseDbCall = useDbCall()
+
+const products: Reactive<{ list: Product[] }>= await findProducts(
+    call.getCollection(), 
+    call.getField().name,
+    ">=",
+    await getKey("name")
+)
+
 </script>

@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
 
-  modules: ['@nuxtjs/ionic', 'nuxt-vuefire', "@nuxtjs/i18n"],
+  modules: ['@nuxtjs/ionic', 'nuxt-vuefire', "@nuxtjs/i18n", 'nuxt-swiper'],
 
   i18n: {
     locales: [

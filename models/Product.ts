@@ -1,14 +1,15 @@
-import type { Timestamp } from 'firebase/firestore'
-import type { UseProduct } from '~/types/Product'
+import type { DocumentData, Timestamp } from 'firebase/firestore'
+import type { ProductData, UseProduct } from '~/types/Product'
 import type { Links } from './Links'
  
-export class Product implements UseProduct {
-    private id: number
-    private name: string
-    private image: string
-    private desc: string
-    private date: Timestamp
-    private links: Links
+export class Product implements UseProduct, ProductData, DocumentData {
+    
+    id: number
+    name: string
+    image: string
+    desc: string
+    date: Timestamp
+    links: Links
 
     constructor(id: number, name: string, image: string, desc: string, date: Timestamp, links: Links ) {
         this.id = id
@@ -42,5 +43,4 @@ export class Product implements UseProduct {
     public getImage() {
         return formatUrl(this.image)
     }
-
 }

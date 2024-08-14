@@ -25,6 +25,7 @@
     "@nuxtjs/ionic": "^0.15.1",
     "firebase": "^10.12.5",
     "nuxt": "^3.12.4",
+    "nuxt-swiper": "^1.2.2",
     "nuxt-vuefire": "^1.0.3",
     "swiper": "^11.1.9",
     "vue": "latest"

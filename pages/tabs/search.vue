@@ -1,10 +1,10 @@
 <template>
-    <ion-page>
-      <Toolbar/>
-        <ion-content >
-          <products-grid :products="products.list"/>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <Toolbar/>
+      <ion-content >
+        <products-grid :products="products.list"/>
+      </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts" setup>

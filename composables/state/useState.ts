@@ -1,7 +1,7 @@
-import type { DocumentData, OrderByDirection } from "firebase/firestore"
+import type { OrderByDirection, WhereFilterOp } from "firebase/firestore"
 import type { Reactive } from "vue"
 import type { Product } from "~/models/Product"
-import { getAllProductsAction } from "~/services/actions/product-action"
+import { findDocInCollectionAction, getAllProductsAction } from "~/services/actions/product-action"
 
 
 export async function getProductsList(
@@ -13,8 +13,23 @@ export async function getProductsList(
 
     ): Promise<Reactive<{ list: Product[] }>> {
 
-    const response: Reactive<{ list: Product[] }> = reactive({ 
+    const productsList: Reactive<{ list: Product[] }> = reactive({ 
         list: await getAllProductsAction(collectionName, limitValue, orderByField, orderByDirection),
     })
-    return response
+    return productsList
+}
+
+export async function findProducts(
+
+    collectionName: string,
+    fieldName: string,
+    operador: WhereFilterOp,
+    query: number | string | undefined
+
+    ): Promise<Reactive<{ list: Product[] }>> {
+
+    const productsList: Reactive<{ list: Product[] }> = reactive({ 
+        list: await findDocInCollectionAction(collectionName, fieldName, operador, query)
+    })
+    return productsList
 }

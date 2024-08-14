@@ -7,13 +7,13 @@ import helpModal from '~/components/modal/help-modal.vue';
 import foundProductsModal from '~/components/modal/search-modal.vue';
 
 export async function openProductModal(id: number) {
-    setKey('cod',String(id))
+    await setKey('cod', String(id))
     const modal = await modalController.create({ component: productModal })
     modal.present()
 }
 
 export async function openFoundProductsModal(name: string) {
-    setKey("name",name)
+    await setKey("name", name)
     const modal = await modalController.create({ component: foundProductsModal })
     modal.present()
 }
