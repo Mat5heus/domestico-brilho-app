@@ -8,7 +8,7 @@
             </ion-col>
             <ion-col size="3">
                 <ion-button size="large">
-                    <ion-icon slot="icon-only" :icon="ioniconsShareOutline" @click="share_product(product)" size="large"/>
+                    <ion-icon slot="icon-only" :icon="ioniconsShareOutline" @click="shareButton()" size="large"/>
                 </ion-button>
             </ion-col>
             <ion-col size="6">
@@ -24,11 +24,22 @@
 import type { Product } from '~/models/Product'
 import type { Links } from '~/models/Links'
 
-import { share_product } from '~/utils/share-product'
+import { Share } from '@capacitor/share';
+import { useRoute } from 'vue-router';
 import { createActionSheetButtons } from '~/utils/action-sheets'
 
 const product: Product = useAttrs().links as Product
 const links: Links = product?.getLinks() as Links
 
 const actionSheetButtons: object[] = createActionSheetButtons(links)
+const route = useRoute()
+
+async function shareButton() {
+    return await Share.share({
+    title: product?.getName(),
+    text: product?.getName(),
+    dialogTitle: 'Compartilhe com a família e amigos!',
+  }); 
+}
+
 </script>

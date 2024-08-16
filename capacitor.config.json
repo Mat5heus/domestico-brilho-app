@@ -7,10 +7,10 @@
       "presentationOptions": ["badge", "sound", "alert"]
     },
     "SplashScreen": {
-      "launchShowDuration": 5000,
+      "launchShowDuration": 2000,
       "launchAutoHide": true,
       "splashFullScreen": true,
-      "androidSplashResourceName": "splash.png",
+      "androidSplashResourceName": "splash",
       "splashImmersive": true,
       "androidScaleType": "CENTER_CROP",
       "showSpinner": true,
