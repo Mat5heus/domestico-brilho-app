@@ -34,14 +34,16 @@
 <script setup lang="ts">
 import { type SearchbarChangeEventDetail } from '@ionic/vue';
 import { openHelpModal, openNotificationsModal } from '~/utils/open-modal';
+import { useIonRouter } from '@ionic/vue';
+import { useRoute } from 'vue-router';
 
-function handleInput(event: IonSearchBarCustomEvent<SearchbarChangeEventDetail>): Promise<void>{
+
+const route = useIonRouter()
+const vueRouter = useRoute()
+
+async function handleInput(event: IonSearchBarCustomEvent<SearchbarChangeEventDetail>): Promise<void>{
   const query: string = event.target.value
-  openFoundProductsModal(
-    capitalize(
-      query.toLocaleLowerCase()
-    )
-  )
+  route.push("/tabs/search?q="+query)
 }
 
 </script>

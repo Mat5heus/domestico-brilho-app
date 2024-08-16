@@ -8,7 +8,7 @@ export function createActionSheetButtons(links: Links): object[] {
             action: 'Comprar no Aliexpress' 
             },
             handler: () => {
-                openMarketplace(links.getAliexpress())
+                openUrl(links.getAliexpress())
             }
         },
         {
@@ -17,12 +17,12 @@ export function createActionSheetButtons(links: Links): object[] {
                 action: "Shopee"
             },
             handler: () => {
-                openMarketplace(links.getShopee())
+                openUrl(links.getShopee())
             }
         },
     ]
 }
 
-function openMarketplace(url: string) {
+export function openUrl(url: string) {
   window.open(url)
 }
