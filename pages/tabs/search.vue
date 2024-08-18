@@ -3,7 +3,7 @@
     <Toolbar/>
       <ion-content >
         <products-grid sectionName="Resultado da busca:" :key="showFoundProductsGrid.list" :products="showFoundProductsGrid.list" v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined" />
-        <products-grid sectionName="Você também pode gostar:" :products="products.list"/>
+        <products-grid sectionName="Você pode ter perdido:" :products="products.list"/>
       </ion-content>
   </ion-page>
 </template>

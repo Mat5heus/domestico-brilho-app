@@ -7,7 +7,7 @@
       "presentationOptions": ["badge", "sound", "alert"]
     },
     "SplashScreen": {
-      "launchShowDuration": 2000,
+      "launchShowDuration": 500,
       "launchAutoHide": true,
       "splashFullScreen": true,
       "androidSplashResourceName": "splash",

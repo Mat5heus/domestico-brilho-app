@@ -59,9 +59,6 @@ importers:
       nuxt-vuefire:
         specifier: ^1.0.3
         version: 1.0.3(@firebase/app-types@0.9.2)(firebase@10.12.5)(magicast@0.3.4)(rollup@4.20.0)(vuefire@3.1.24(consola@3.2.3)(firebase@10.12.5)(vue@3.4.36(typescript@5.5.4)))
-      swiper:
-        specifier: ^11.1.9
-        version: 11.1.9
       vue:
         specifier: latest
         version: 3.4.36(typescript@5.5.4)
@@ -4524,10 +4521,6 @@ packages:
 
   swiper@10.3.1:
     resolution: {integrity: sha512-24Wk3YUdZHxjc9faID97GTu6xnLNia+adMt6qMTZG/HgdSUt4fS0REsGUXJOgpTED0Amh/j+gRGQxsLayJUlBQ==}
-    engines: {node: '>= 4.7.0'}
-
-  swiper@11.1.9:
-    resolution: {integrity: sha512-rflu8zvfGa3x1v/aeSufk4zRJffhOQowyvtJlp46sUBnOqAuk1Rdv5Ldj0AWWBV595iZ+ZMk7VB35ZRtRUomtA==}
     engines: {node: '>= 4.7.0'}
 
   system-architecture@0.1.0:
@@ -10403,8 +10396,6 @@ snapshots:
       picocolors: 1.0.1
 
   swiper@10.3.1: {}
-
-  swiper@11.1.9: {}
 
   system-architecture@0.1.0: {}
 

@@ -4,16 +4,14 @@
         <ion-content>
             <ion-img :src="product?.getImage()" :alt="product?.getName()"/>
 
-            <ion-text>
-                <h6 id="figcaption">(Foto e descrição meramente ilustrativas)</h6>
-            </ion-text>
-
             <ion-text color="dark">
-                <h5 id="title">{{ product?.getName() }}</h5>
-                <br>
+                <h6 id="info">(Foto e descrição meramente ilustrativas)</h6>
+                <br/>
+                <h4 id="title">{{ product?.getName() }}</h4>
+                <br/>
                 <h6 class="description-title">Descrição:</h6>
                 <p id="description">{{ product?.getDesc() }}</p>
-                <br>
+                <br/>
                 <p class="description-title">Última atualização: {{ product?.getDate()?.toDate() }}</p>
             </ion-text>
 
@@ -55,11 +53,11 @@ ion-action-sheet {
 --box-shadow:0px;
 }
 
-ion-toast, #title, .description-title, #figcaption {
+ion-toast, #title, .description-title, #info {
 text-align: center;
 }
 
-.description-title, #figcation {
+.description-title, #info {
 font-size: medium; 
 color: gray; 
 font-style: oblique;
@@ -67,8 +65,9 @@ font-style: oblique;
 #description {
 text-align: center;
 }
-#figcaption {
-font-size: smaller;
+#info {
+font-size: xx-small;
+margin-top: 0.3rem;
 }
 .call-to-action-footer {
 background-color: var(--ion-color-secondary);

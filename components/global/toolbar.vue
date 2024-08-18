@@ -26,7 +26,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
+     
     </ion-toolbar>
   </ion-header>
 </template>
@@ -35,11 +35,8 @@
 import { type SearchbarChangeEventDetail } from '@ionic/vue';
 import { openHelpModal, openNotificationsModal } from '~/utils/open-modal';
 import { useIonRouter } from '@ionic/vue';
-import { useRoute } from 'vue-router';
-
 
 const route = useIonRouter()
-const vueRouter = useRoute()
 
 async function handleInput(event: IonSearchBarCustomEvent<SearchbarChangeEventDetail>): Promise<void>{
   const query: string = event.target.value

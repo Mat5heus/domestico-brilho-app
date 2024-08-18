@@ -9,6 +9,7 @@ export interface ProductData {
     links: Links
     image: string
     date: Timestamp
+    likes: number | undefined
 }
 
 export interface LinksData {
@@ -68,5 +69,11 @@ export interface UseProduct {
      * @returns a data no tipo `string` 
      */
     getImage: () => string
+
+    /**
+     * Recupera os likes do produto
+     * @returns os likes no tipo `number | undefined`
+     */
+    getLikes: () => number | undefined
 
 }

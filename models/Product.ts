@@ -10,14 +10,16 @@ export class Product implements UseProduct, ProductData, DocumentData {
     desc: string
     date: Timestamp
     links: Links
+    likes: number | undefined
 
-    constructor(id: number, name: string, image: string, desc: string, date: Timestamp, links: Links ) {
+    constructor(id: number, name: string, image: string, desc: string, date: Timestamp, links: Links, likes: number | undefined = undefined) {
         this.id = id
         this.name = name
         this.image = image
         this.desc = desc
         this.date = date
         this.links = links
+        this.likes = likes
     }
 
     public getId() {
@@ -42,5 +44,9 @@ export class Product implements UseProduct, ProductData, DocumentData {
 
     public getImage() {
         return formatUrl(this.image)
+    }
+
+    public getLikes() {
+        return this.likes
     }
 }
