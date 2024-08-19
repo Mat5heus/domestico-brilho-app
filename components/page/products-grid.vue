@@ -2,7 +2,9 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-text>{{ sectionName }}</ion-text>
+                <ion-text>
+                    <h4>{{ sectionName }}</h4>
+                </ion-text>
             </ion-col>
         </ion-row>
         <ion-row>
@@ -13,9 +15,11 @@
                         :alt="product?.getName()" 
                         :src="product?.getImage()"
                     />
-                    <figcaption class="desc-product-image">
-                        <ion-text>{{ "#"+product?.getId()+" - "+product?.getName() }}</ion-text>
-                    </figcaption>
+                    <ion-text>
+                        <figcaption class="desc-product-image">
+                            {{ "#"+product?.getId()+" - "+product?.getName() }}
+                        </figcaption>
+                    </ion-text>
                 </figure>                
             </ion-col>
         </ion-row>

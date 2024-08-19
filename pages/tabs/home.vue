@@ -22,7 +22,6 @@ useCheckForUpdates()
 definePageMeta({ alias: ['/'] })
 
 const call = useDbCall()
-
 const weekProducts = reactive({ list: [] })
 const randomProducts = reactive({ list: [] })
 
