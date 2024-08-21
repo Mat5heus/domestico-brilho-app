@@ -19,3 +19,14 @@ export function capitalize(word: string): string {
     const response = word.charAt(0).toUpperCase() + word.slice(1)
     return response
 }
+
+export function formatDesc(description: string, length: number) {
+    let formatedText = description.slice(0, length)
+    if(description.length > length) {
+        if(formatedText[formatedText.length - 1] == " ") {
+            formatedText = formatedText.slice(0, length - 1)
+        }
+        return  formatedText + "..."
+    }
+    return formatedText
+}

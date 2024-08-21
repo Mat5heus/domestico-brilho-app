@@ -15,7 +15,7 @@
         </ion-tab-button>
         
       </ion-tab-bar>
-      </ion-tabs>
+    </ion-tabs>
   </ion-page>
 </template>
 

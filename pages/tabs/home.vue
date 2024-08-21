@@ -3,10 +3,10 @@
     <toolbar/>
     <ion-content overflow-scroll="true">
       <div>
-        <img :src="banner"/>
+        <img loading="lazy" :src="banner"/>
       </div>
-      <slide :section_name="$t('title')" :products="weekProducts?.list"/>
-      <products-grid sectionName="Você também pode gostar:" :products="randomProducts?.list"/>
+      <product-slide :section_name="$t('title')" :products="weekProducts?.list"/>
+      <Lazyproducts-grid sectionName="Você também pode gostar:" :products="randomProducts?.list"/>
     </ion-content>
   </ion-page>
 </template>

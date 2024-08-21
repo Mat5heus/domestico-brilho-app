@@ -2,8 +2,13 @@
   <ion-page>
     <Toolbar/>
       <ion-content >
-        <products-grid sectionName="Resultado da busca:" :key="showFoundProductsGrid.list" :products="showFoundProductsGrid.list" v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined" />
-        <products-grid sectionName="Você pode ter perdido:" :products="products.list"/>
+        <products-grid 
+          sectionName="Resultado da busca:" 
+          :key="showFoundProductsGrid.list" 
+          :products="showFoundProductsGrid.list" 
+          v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined" 
+        />
+        <Lazyproducts-grid sectionName="Você pode ter perdido:" :products="products.list"/>
       </ion-content>
   </ion-page>
 </template>
@@ -35,7 +40,6 @@ showFoundProductsGrid.list = await getProductsFromRoute(
 watch(
   () => route.query.q,
   async (newQuery) => {
-    console.log("Esta é a nova query="+newQuery)
     const searchQuery = Array.isArray(newQuery) ? newQuery.join(',') : (newQuery || '');
     showFoundProductsGrid.list = await getProductsFromQuery(call, searchQuery)
   }
