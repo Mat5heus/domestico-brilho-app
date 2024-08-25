@@ -75,7 +75,8 @@ function convertToProduct(data: Product): Product {
         data.name,
         data.image,
         data.desc, 
-        data.date, 
+        data.date,
+        data.videoDemo,
         new Links(data.links),
         data?.likes
     )

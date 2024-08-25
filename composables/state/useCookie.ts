@@ -25,7 +25,7 @@ export const useCheckForUpdates = () =>  {
       hasCheckedForUpdates.value = 'true'
     }
 
-  }).catch((e) => console.error("Erro: "+e))
+  }).catch((e) => console.log("Não foi possível obter as informações do App: "+e))
   
 }
 

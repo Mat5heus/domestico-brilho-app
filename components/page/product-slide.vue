@@ -14,14 +14,13 @@
             }"
         >
             <SwiperSlide :lazy="true"  v-for="product in productsList" :key="productsList.id">
-                <product-card :product="product"/>      
+                <Lazyproduct-card :product="product"/>      
             </SwiperSlide>
         </Swiper>
     </div>
 </template>
 
 <script setup lang="ts">
-//import { openProductModal } from '~/utils/open-modal';
 import { Product } from '~/models/Product';
 import { Autoplay } from 'swiper/modules';
 

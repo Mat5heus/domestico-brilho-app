@@ -39,3 +39,11 @@ img.product_image {
     justify-content: center;
 
 }
+
+.container-align-center {
+    text-align: center;
+}
+
+.space-between-button-and-icon {
+    padding-left: 0.5rem;
+}

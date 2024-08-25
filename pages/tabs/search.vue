@@ -8,7 +8,7 @@
           :products="showFoundProductsGrid.list" 
           v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined" 
         />
-        <Lazyproducts-grid sectionName="Você pode ter perdido:" :products="products.list"/>
+        <products-grid sectionName="Você pode ter perdido:" :products="products.list"/>
       </ion-content>
   </ion-page>
 </template>

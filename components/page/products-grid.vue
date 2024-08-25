@@ -9,7 +9,7 @@
         </ion-row>
         <ion-row>
             <ion-col class="group-of-products" size="6" v-for="product in productsList" :key="productsList.id">
-                <product-card :product="product"/>           
+                <Lazyproduct-card :product="product"/>           
             </ion-col>
         </ion-row>
     </ion-grid>

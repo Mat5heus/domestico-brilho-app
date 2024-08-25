@@ -8,11 +8,12 @@ export class Product implements UseProduct, ProductData, DocumentData {
     name: string
     image: string
     desc: string
+    videoDemo: string | undefined
     date: Timestamp
     links: Links
     likes: number | undefined
 
-    constructor(id: number, name: string, image: string, desc: string, date: Timestamp, links: Links, likes: number | undefined = undefined) {
+    constructor(id: number, name: string, image: string, desc: string, date: Timestamp, videoDemo: string | undefined, links: Links, likes: number | undefined = undefined) {
         this.id = id
         this.name = name
         this.image = image
@@ -20,6 +21,7 @@ export class Product implements UseProduct, ProductData, DocumentData {
         this.date = date
         this.links = links
         this.likes = likes
+        this.videoDemo = videoDemo
     }
 
     public getId() {
@@ -48,5 +50,9 @@ export class Product implements UseProduct, ProductData, DocumentData {
 
     public getLikes() {
         return this.likes
+    }
+
+    public getVideoDemo() {
+        return this.videoDemo
     }
 }
