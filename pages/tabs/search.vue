@@ -4,11 +4,11 @@
       <ion-content >
         <products-grid 
           sectionName="Resultado da busca:" 
-          :key="showFoundProductsGrid.list" 
-          :products="showFoundProductsGrid.list" 
-          v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined" 
+          :key="showFoundProductsGrid?.list"
+          :products="showFoundProductsGrid?.list"
+          v-if="showFoundProductsGrid !== undefined && route.query.q !== undefined"
         />
-        <products-grid sectionName="Você pode ter perdido:" :products="products.list"/>
+        <products-grid sectionName="Você pode ter perdido:" :products="products.list" :key="products?.list"/>
       </ion-content>
   </ion-page>
 </template>
@@ -21,21 +21,31 @@ import { reactive } from 'vue';
 import { Product } from '~/models/Product';
 import { getAllProductsAction } from '~/services/actions/product-action';
 
-const showFoundProductsGrid = reactive({ list: [] })
-const products = reactive({ list: [] })
+const showFoundProductsGrid = reactive({ list: [] as Product[] | void })
+const products = reactive({ list: [] as Product[] })
 
 const route = useRoute()
 const call = useDbCall()
 
-products.list = await getAllProductsAction(
-  call.getCollection(),
-  call.getLimitValue()
-)
+try {
+  Promise.all([
+    getAllProductsAction(
+      call.getCollection(),
+      call.getLimitValue()
+    ),
+    getProductsFromRoute(
+      call, 
+      route
+    )
 
-showFoundProductsGrid.list = await getProductsFromRoute(
-  call, 
-  route
-) as Product[]
+  ]).then(([productsData, foundProductsData]) => {
+    products.list = productsData
+    showFoundProductsGrid.list = foundProductsData
+  })
+} catch(e) {
+  console.log("Não foi possível pegar dados: "+e)
+}
+
 
 watch(
   () => route.query.q,

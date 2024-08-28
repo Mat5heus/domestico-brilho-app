@@ -1,10 +1,8 @@
-import type { WhereFilterOp } from "firebase/firestore"
-import type { Reactive } from "vue"
 import type { Product } from "~/models/Product"
 import { findDocInCollectionAction } from "~/services/actions/product-action"
 import type { UseDbCall } from "~/types/db"
 
-export async function findProducts(
+/*export async function findProducts(
 
     collectionName: string,
     fieldName: string,
@@ -17,7 +15,7 @@ export async function findProducts(
         list: await findDocInCollectionAction(collectionName, fieldName, operador, query)
     })
     return productsList
-}
+}*/
 
 export async function getProductsFromRoute(call: UseDbCall,route: object): Promise<Product[] | void> {
     if ('query' in route && 'q' in route.query) {

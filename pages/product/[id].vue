@@ -1,13 +1,12 @@
 <template>
     <ion-page>
-        <page-head :name="product?.getName()"/>
-        <ion-content>
-            <Lazyion-img :src="product?.getImage()" :alt="product?.getName()"/>
-
+        <page-head :key="product.list?.getName()" :name="product.list?.getName()"/>
+        <ion-content :key="product.list">
+            <Lazyion-img :src="product.list?.getImage()" :alt="product.list?.getName()"/>
             <ion-text>
                 <h6 id="info">(Foto e descrição meramente ilustrativas)</h6>
                 <br/>
-                <h4 id="title">{{ product?.getName() }}</h4>
+                <h4 id="title">{{ product.list?.getName() }}</h4>
                 <br/>
             </ion-text>
             <ion-grid>
@@ -23,41 +22,44 @@
             <ion-text color="dark">
                
                 <h6 class="description-title">Descrição:</h6>
-                <p id="description">{{ product?.getDesc() }}</p>
+                <p id="description">{{ product.list?.getDesc() }}</p>
                 <br/>
-                <p class="description-title">Última atualização: {{ product?.getDate()?.toDate() }}</p>
+                <p class="description-title">Última atualização: {{ product.list?.getDate()?.toDate() }}</p>
             </ion-text>
 
         </ion-content>
         <ion-footer class="call-to-action-footer">
-            <call-to-action :links="product"/>
+            <call-to-action :links="product.list"/>
         </ion-footer>
     </ion-page>
 </template>
   
 <script lang="ts" setup>
+import { Product } from '~/models/Product';
+
 import { Browser } from '@capacitor/browser';
-
-import type { Reactive } from 'vue';
-import type { Product } from '~/models/Product';
-
-import { findProducts } from '~/composables/state/useState';
 import { useDbCall } from '~/composables/api/useDb';
 import { useRoute } from 'vue-router';
+import { findDocInCollectionAction } from '~/services/actions/product-action';
 
 const route = useRoute()
 const call = useDbCall()
 
-const products: Reactive<{ list: Product[] }> = await findProducts(
+const product = reactive({ list: undefined as Product | undefined })
+
+let videoUrl: string | undefined;
+
+findDocInCollectionAction(
     call.getCollection(),
     call.getField().id,
     "==",
     Number(route.params.id)
+).then((data) => {
+    product.list = data?.pop()
+    videoUrl = product.list?.getVideoDemo()
+}).catch((e) => 
+    console.log("Não foi possível encontrar o produto: "+e)
 )
-
-const product = products.list?.pop()
-
-const videoUrl: string | undefined = product?.getVideoDemo()
 
 const openVideoPage = async () => {
     try {
