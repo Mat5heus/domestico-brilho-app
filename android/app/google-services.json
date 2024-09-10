@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "261305583164",
+    "project_id": "app-domstico-brilho",
+    "storage_bucket": "app-domstico-brilho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261305583164:android:b45202d8e9a17dc33b6539",
+        "android_client_info": {
+          "package_name": "com.domesticobrilho.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261305583164-74lhcihkn31p1k7ot7n9do5jnt9pisf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6uDxvVmZbEz_KOHlFUvSDN8Ud4OCuvtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261305583164-74lhcihkn31p1k7ot7n9do5jnt9pisf0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

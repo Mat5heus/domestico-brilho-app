@@ -1,8 +1,8 @@
 <template>
     <ion-page>
         <page-head :key="product.list?.getName()" :name="product.list?.getName()"/>
-        <ion-content :key="product.list">
-            <Lazyion-img :src="product.list?.getImage()" :alt="product.list?.getName()"/>
+        <ion-content>
+            <Lazyion-img :src="productImage" :alt="product.list?.getName()"/>
             <ion-text>
                 <h6 id="info">(Foto e descrição meramente ilustrativas)</h6>
                 <br/>
@@ -41,25 +41,16 @@ import { Browser } from '@capacitor/browser';
 import { useDbCall } from '~/composables/api/useDb';
 import { useRoute } from 'vue-router';
 import { findDocInCollectionAction } from '~/services/actions/product-action';
+import { useImageCache } from '#imports';
 
 const route = useRoute()
 const call = useDbCall()
+const productImage = ref('' as string | Blob)
+const { transformImageUrl } = useImageCache()
 
 const product = reactive({ list: undefined as Product | undefined })
 
 let videoUrl: string | undefined;
-
-findDocInCollectionAction(
-    call.getCollection(),
-    call.getField().id,
-    "==",
-    Number(route.params.id)
-).then((data) => {
-    product.list = data?.pop()
-    videoUrl = product.list?.getVideoDemo()
-}).catch((e) => 
-    console.log("Não foi possível encontrar o produto: "+e)
-)
 
 const openVideoPage = async () => {
     try {
@@ -69,8 +60,26 @@ const openVideoPage = async () => {
     } catch(e) {
         console.log("Browser não pôde ser aberto: "+e)
     }
-};
+}
 
+onMounted(async () => {
+    try {
+        findDocInCollectionAction(
+            call.getCollection(),
+            call.getField().id,
+            "==",
+            Number(route.params.id)
+        ).then((data) => {
+            product.list = data?.pop()
+            videoUrl = product.list?.getVideoDemo()
+            transformImageUrl(product.list?.getImage()).then(base64Url => productImage.value = base64Url)
+        }).catch((e) => 
+            console.log("Não foi possível encontrar o produto: "+e)
+        )
+    } catch(error) {
+        console.log("Não foi possível obter informações sobre o produto")
+    }
+})
 </script>
 
 <style >

@@ -2,7 +2,6 @@ import { initializeApp, type FirebaseApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
 import { Firestore, getFirestore } from "firebase/firestore";
 
-
 export default defineNuxtPlugin((nuxtApp) => {
   
   const vuefireHash = useRuntimeConfig().public.vuefire.config
@@ -28,5 +27,4 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.provide('firestore', firestore)
 
   nuxtApp.vueApp.provide('firestore', firestore)
-
 })

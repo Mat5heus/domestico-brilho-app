@@ -17,7 +17,7 @@
             <ion-buttons>
               <ion-button @click="openNotificationsModal" size="large">
                 <ion-icon slot="icon-only" color="dark" :icon="ioniconsNotificationsOutline"/>
-                <ion-badge color="danger"></ion-badge>
+                <ion-badge color="danger">{{ notifications.notificationsListener.pushNotificationReceived?.badge }}</ion-badge>
               </ion-button>
               <ion-button @click="openHelpModal" size="large">
                 <ion-icon slot="icon-only" color="dark" :icon="ioniconsHelpCircleOutline"/>
@@ -32,9 +32,10 @@
 </template>
 
 <script setup lang="ts">
-import { type SearchbarChangeEventDetail } from '@ionic/vue';
+import type { SearchbarChangeEventDetail } from '@ionic/vue';
 import { openHelpModal, openNotificationsModal } from '~/utils/open-modal';
 import { useIonRouter } from '@ionic/vue';
+import notifications from '~/composables/api/notifications';
 
 const route = useIonRouter()
 

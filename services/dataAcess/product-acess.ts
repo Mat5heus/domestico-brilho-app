@@ -1,5 +1,5 @@
 //import { db } from "~/plugins/firebase-config.vue";
-import { collection, addDoc, setDoc, doc, updateDoc, getDoc, getDocs, DocumentReference, type DocumentData, query, where, QuerySnapshot, orderBy, limit, Query, Firestore, FieldPath, type WhereFilterOp, type OrderByDirection, QueryDocumentSnapshot } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc, getDoc, getDocs, DocumentReference, type DocumentData, query, where, QuerySnapshot, orderBy, limit, Query, Firestore, FieldPath, type WhereFilterOp, type OrderByDirection, QueryDocumentSnapshot, or } from "firebase/firestore";
 import type { ProductData } from "~/types/Product";
 
 const db: Firestore = useNuxtApp().$firestore

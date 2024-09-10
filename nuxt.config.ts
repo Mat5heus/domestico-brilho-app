@@ -47,6 +47,12 @@ export default defineNuxtConfig({
     '~/assets/css/product.css'
   ],
 
+  runtimeConfig: {
+    public:{
+      vapidKey: process.env.FIREBASE_MESSAGING_VAPIDKEY
+    }
+  },
+
   ssr: false,
   compatibilityDate: '2024-08-06',
 })

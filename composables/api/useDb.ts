@@ -4,7 +4,7 @@ export function useDbCall(): UseDbCall {
 
     const config: DbCallConfig = {
         collection: "Products",
-        limitValue: 10,
+        limitValue: 20,
         field: {
             date: "date",
             name: "name",
