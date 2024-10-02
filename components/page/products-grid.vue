@@ -8,17 +8,14 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col class="group-of-products" size="6" v-for="product in productsList" :key="productsList.id">
-                <Lazyproduct-card :product="product"/>           
+            <ion-col class="group-of-products" size="6" v-for="(product, index) in products" :key="products.id">
+                <product-card v-if="index < 2" :product="product" :routeInfo="routeInfo"/>
+                <Lazyproduct-card v-else :product="product" :routeInfo="routeInfo"/>
             </ion-col>
         </ion-row>
     </ion-grid>
 </template>
 
 <script lang="ts" setup>
-import { Product } from '~/models/Product';
-
-const productsList: Product[] = useAttrs().products as Product[]
-const sectionName: string = useAttrs().sectionName as string
-
+const { routeInfo, products, sectionName } = useAttrs()
 </script>

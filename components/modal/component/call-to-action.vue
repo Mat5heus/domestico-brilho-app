@@ -1,43 +1,36 @@
-<template>
-    <ion-grid :fixed="true">
-        <ion-row>
-            <ion-col size="3" hidden>
-                <ion-button size="large" @click="onLike()">
-                    <ion-icon slot="icon-only" :icon="ioniconsHeartOutline" size="large"/>
-                    <ion-text>+{{ likesCounter.like }}</ion-text>
-                </ion-button>
-            </ion-col>
-            <ion-col size="3" >
-                <ion-button size="large" @click="onShare()">
-                    <ion-icon slot="icon-only" :icon="ioniconsShareSocialOutline" size="large"/>
-                </ion-button>
-            </ion-col>
-            <ion-col size="6" offset="3">
-                <ion-button id="open-action-sheet" color="tertiary" fill="solid">
-                    <ion-icon color="primary" size="large" :icon="ioniconsBagOutline"></ion-icon>
-                    <ion-text color="primary" class="space-between-button-and-icon">Comprar Agora</ion-text>
-                </ion-button>
-                <ion-action-sheet trigger="open-action-sheet" header="Escolha a loja" :buttons="actionSheetButtons"/>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+<template>    
+    <ion-button size="large" class="product-page-buttons" @click="onShare()">
+        <ion-icon slot="icon-only" :icon="ioniconsShareSocialOutline" size="large"/>
+    </ion-button>
+    <ion-button id="open-action-sheet" class="product-page-buttons" color="tertiary" fill="solid">
+        <ion-icon color="primary" size="large" :icon="ioniconsBagOutline"></ion-icon>
+        <ion-text color="primary" class="space-between-button-and-icon">{{ $t("View in store") }}</ion-text>
+    </ion-button>
+    <ion-action-sheet trigger="open-action-sheet" :header='$t("Choose the store")' :buttons="actionSheetButtons"/>
 </template>
 <script lang="ts" setup>
 import type { Product } from '~/models/Product'
-import type { Links } from '~/models/Links'
-
 import { Share } from '@capacitor/share';
-import { createActionSheetButtons } from '~/utils/action-sheets'
+import { onIonViewDidEnter, useI18n } from "#imports"
+import { createActionSheetButtons } from '~/utils/action-sheets';
+
+const { t } = useI18n()
 
 const likesCounter =  {
     like: ref(0),
     flag: false
 }
 
-const product: Product = useAttrs().links as Product
-const links: Links = product?.getLinks() as Links
+const buttons = {
+    text: {
+        aliexpress: t("Buy on AliExpress"),
+        shopee: t("Buy on Shopee")
+    },
+}
 
-const actionSheetButtons: object[] = createActionSheetButtons(links)
+
+const product: Product = useAttrs().links as Product
+const actionSheetButtons = createActionSheetButtons(product, buttons)
 
 if(product?.getLikes() !== undefined) {
     likesCounter.like.value = product?.getLikes() as number
@@ -69,6 +62,18 @@ const onShare = async () => {
     }
     
 }
+/*
+<ion-button size="large" @click="onLike()">
+    <ion-icon slot="icon-only" :icon="ioniconsHeartOutline" size="large"/>
+    <ion-text>+{{ likesCounter.like }}</ion-text>
+</ion-button>
+*/
 
 
 </script>
+<style>
+.product-page-buttons {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+</style>

@@ -30,3 +30,8 @@ export function formatDesc(description: string, length: number) {
     }
     return formatedText
 }
+
+export function isBase64Image(str: string) {
+    // Verifica se a string começa com 'data:image/' e termina com 'base64,'
+    return /^data:image\/(png|jpeg|jpg|gif|webp);base64,/.test(str);
+}

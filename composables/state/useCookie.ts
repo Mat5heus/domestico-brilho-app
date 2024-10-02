@@ -5,7 +5,9 @@ import { createAlert } from '~/utils/alertComponent'
 import { getAppInfoAction } from '~/services/actions/product-action';
 import { App, type AppInfo, type AppPlugin } from '@capacitor/app'
 
-export const useCheckForUpdates = () =>  {
+import { openUrl } from '../../utils/action-sheets';
+
+export const useCheckForUpdates = (alertComponent: object) =>  {
   const hasCheckedForUpdates = useCookie('hasCheckedForUpdates', { default: () => 'false' })
 
   App.getInfo().then((appInfo: AppInfo) => {
@@ -17,23 +19,8 @@ export const useCheckForUpdates = () =>  {
         const lastVersion = convertToApp(appInfoFromDb?.pop() as DocumentData)
         setTimeout(async () => {
           if(isAtLastVersion(currentVersionCode, lastVersion)) {
-            const alertComponent = {
-              header: "Atualização disponivel!",
-              message: "Uma nova versão do app está disponível, deseja atualizar agora?" ,
-              buttons: [
-                {
-                  text: "Não",
-                  role: "cancel",
-                  handler: () => console.log("Vai atualizar depois"),
-                  cssClass: 'alert-button-cancel',
-                },
-                {
-                  text: "Atualizar",
-                  role: "confirm",
-                  handler: () => openUrl(lastVersion?.getDownloadLink() as string),
-                  cssClass: 'alert-button-confirm',
-                },
-              ],
+            alertComponent.buttons[1].handler = () => {
+              openUrl(lastVersion?.getDownloadLink() as string)
             }
             createAlert(alertComponent)
           }

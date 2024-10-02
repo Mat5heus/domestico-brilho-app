@@ -6,17 +6,19 @@ export class Product implements UseProduct, ProductData, DocumentData {
     
     id: number
     name: string
-    image: string
+    image: string | null
+    imageUrlBase64: string | null
     desc: string
     videoDemo: string | undefined
     date: Timestamp
     links: Links
     likes: number | undefined
 
-    constructor(id: number, name: string, image: string, desc: string, date: Timestamp, videoDemo: string | undefined, links: Links, likes: number | undefined = undefined) {
+    constructor(id: number, name: string, image: string | null, imageUrlBase64: string | null = null,  desc: string, date: Timestamp, videoDemo: string | undefined, links: Links, likes: number | undefined = undefined) {
         this.id = id
         this.name = name
         this.image = image
+        this.imageUrlBase64 = imageUrlBase64
         this.desc = desc
         this.date = date
         this.links = links
@@ -45,7 +47,14 @@ export class Product implements UseProduct, ProductData, DocumentData {
     }
 
     public getImage() {
+        if(!this.image) {
+            return this.image
+        }
         return formatUrl(this.image)
+    }
+
+    public getUrlBase64() {
+        return this.imageUrlBase64
     }
 
     public getLikes() {

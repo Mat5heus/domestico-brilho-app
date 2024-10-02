@@ -1,9 +1,12 @@
 <template>
     <ion-card @click="openProductInfo(product?.getId().toString())">
-        <img class="product_image"
+        <img v-if="!productImage" :src="imageIcon"></img>
+        <img
+            class="product_image"
             :alt="product?.getName()"
             :src="productImage"
             loading="lazy"
+            v-else
         />
         <ion-card-header>
             <ion-card-title class="desc-product-image">
@@ -13,23 +16,51 @@
     </ion-card>
 </template>
 <script setup lang="ts">
-import { Product } from '~/models/Product';
+//import { Product } from '~/models/Product';
 import { formatDesc } from '~/utils/string';
+import imageIcon from '~/assets/images/image-icon.svg'
 import { useImageCache } from '~/composables/useImageCache';
+//import { openProductInfo } from "~/utils/route-functions"
+import { useIonRouter } from '@ionic/vue';
+import { useI18n } from "#imports"
+import { getAnalytics, logEvent } from "firebase/analytics";
+
+const analytics = getAnalytics();
 
 const productImage = ref('' as string | Blob)
-const product: Product = useAttrs().product as Product
+const { product, routeInfo } = useAttrs()
+
+const { locale } = useI18n()
 const router = useIonRouter()
-const { transformImageUrl } = useImageCache()
+
+const localePath = (path: string) => {
+    if(locale.value == "pt") {
+        return path
+    }
+    return `/${locale.value}${path}`;
+}
 
 const openProductInfo = (id: string): void => {
-    router.navigate(
-        '/product/'+id,
-        'forward',
-        'push'
-    )
+    logEvent(analytics, 'select_item', {
+        item_list_name: routeInfo.component,
+        items: [{
+            item_id: product?.getId(),
+            item_name: product?.getName()
+        }]
+    })
+    
+    router.push({
+        path: localePath(`/product/${id}`),
+        query: {
+            utm_source: routeInfo.component,
+            utm_medium: routeInfo.location
+        }
+    })
 }
-onMounted(async () => {
-    transformImageUrl(product?.getImage()).then(base64Url => productImage.value = base64Url)
-})
+
+useImageCache()
+    .transformImageUrl(product)
+        .then(base64Url => 
+            productImage.value = base64Url
+        )
 </script>

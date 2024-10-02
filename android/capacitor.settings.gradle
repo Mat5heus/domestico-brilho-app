@@ -2,6 +2,9 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/.pnpm/@capacitor+android@6.1.1_@capacitor+core@6.1.1/node_modules/@capacitor/android/capacitor')
 
+include ':capacitor-community-firebase-analytics'
+project(':capacitor-community-firebase-analytics').projectDir = new File('../node_modules/.pnpm/@capacitor-community+firebase-analytics@6.0.0_@capacitor+core@6.1.1/node_modules/@capacitor-community/firebase-analytics/android')
+
 include ':capacitor-community-sqlite'
 project(':capacitor-community-sqlite').projectDir = new File('../node_modules/.pnpm/@capacitor-community+sqlite@6.0.1_@capacitor+core@6.1.1/node_modules/@capacitor-community/sqlite/android')
 

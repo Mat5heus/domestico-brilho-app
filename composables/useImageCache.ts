@@ -1,6 +1,9 @@
 // composables/useImageCache.ts
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Network } from '@capacitor/network';
+import { isBase64Image } from "~/utils/string"
+import md5 from "md5"
+import type { Product } from '~/models/Product';
 
 export const useImageCache = () => {
 
@@ -27,7 +30,7 @@ export const useImageCache = () => {
         }
     }
 
-    const getFromCache = async (filename: string): Promise<string | null | Blob> => {
+    const getFromCache = async (filename: string): Promise<string | null> => {
         const mimeType = getMimeTypeFromFileName(filename)
         try {
             const file = await Filesystem.readFile({
@@ -55,11 +58,7 @@ export const useImageCache = () => {
                     return
                 }
 
-                await Filesystem.writeFile({
-                    path: filename,
-                    data: base64data,
-                    directory: Directory.Cache,
-                })
+               saveImage(base64data, filename)
 
                 const dataUri = `data:${mimeType};base64,${base64data}`;
                 resolve(dataUri);
@@ -75,17 +74,84 @@ export const useImageCache = () => {
         return status.connected
     }
 
-    const transformImageUrl = async (imageUrl: string | undefined): Promise<string | Blob> => {
-        const filename = extractFilenameFromUrl(imageUrl);
-        let cachedData = await getFromCache(filename);
+    const saveImage = async (imageUrl: string, filename: string) => {
+        await Filesystem.writeFile({
+            path: filename,
+            data: imageUrl,
+            directory: Directory.Cache,
+        })
+    }
 
+    const getBase64FromCache = async (filename: string): Promise< string | null | Blob> => {
+        try {
+            const file = await Filesystem.readFile({
+                directory: Directory.Cache,
+                path: filename,
+            })
+            return file.data
+        } catch (error) {
+            console.log(`Base64 image not found in cache: ${filename}`);
+            return null
+        }
+    }
+
+    const getImageUrl = (cachedData: string | null, imageUrl: string, filename: string, cacheCallback: CallableFunction) => {
         if (cachedData) {
+            if (!isBase64Image(cachedData)) {
+                // Criar um Blob URL para o base64 recuperado do cache
+                const byteCharacters = atob(cachedData);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray]);
+
+                // Retornar o Blob URL
+                return URL.createObjectURL(blob);
+            }
             return cachedData
         } else {
-            if (await isOnline()) {
-                return await cacheImage(imageUrl, filename);
-            } 
-            return '/assets/icons/svg/dummy.svg';
+            cacheCallback(imageUrl, filename);
+            return imageUrl
+        }
+    }
+
+     // Função para gerar o hash SHA-256 a partir do conteúdo base64
+    const generateHashFromBase64 = (base64: string): string => {
+        return md5(base64)
+    }
+
+    const urlOrBase64 = (product: Product): string | null => {
+        let url = product.getImage()
+        if(!url) {
+            url = product.getUrlBase64()
+            if(url) {
+                return url
+            } else {
+                return null
+            }
+        }
+        return url
+    }
+
+    const transformImageUrl = async (product: Product): Promise<string | null> => {
+        const imageUrl = urlOrBase64(product)
+
+        if(!imageUrl) {
+            return null
+        }
+
+        if(!isBase64Image(imageUrl)) {
+            const filename = extractFilenameFromUrl(imageUrl);
+            const cachedData = await getFromCache(filename)
+
+            return getImageUrl(cachedData, imageUrl, filename, cacheImage)
+        } else {
+            const filename = generateHashFromBase64(imageUrl.slice(0,50))
+            const cachedData = await getBase64FromCache(filename)
+
+            return getImageUrl(cachedData, imageUrl, filename, saveImage)
         }
     }
 

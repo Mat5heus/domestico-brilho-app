@@ -5,21 +5,36 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/ionic', 'nuxt-vuefire', "@nuxtjs/i18n", 'nuxt-swiper'],
 
+  router: {
+    middleware: 'redirectLocale'
+  },
+
   i18n: {
     locales: [
       {
         code: 'pt',
-        file: 'pt-BR.json'
+        file: 'pt-BR.json',
+        name: 'Português'
       },
       {
         code: 'en',
-        file: 'en-US.json'
+        file: 'en-US.json',
+        name: 'English'
+      },
+      {
+        code: 'ja',
+        file: 'ja-JP.json',
+        name: '日本語'
+      },
+      {
+        code: 'es',
+        file: 'es-ES.json',
+        name: 'Español'
       }
     ],
     lazy: true,
     langDir: 'lang',
     defaultLocale: 'pt'
-
   },
   components: [
     {
@@ -44,7 +59,8 @@ export default defineNuxtConfig({
     '~/assets/css/colors-standard.css',
     '~/assets/css/text-standard.css',
     '~/assets/css/searchBar.css',
-    '~/assets/css/product.css'
+    '~/assets/css/product.css',
+    '~/assets/css/preferences.css'
   ],
 
   runtimeConfig: {

@@ -1,6 +1,8 @@
 import { PushNotifications } from '@capacitor/push-notifications';
 import type { ActionPerformed, PushNotificationSchema, RegistrationError, Token } from '@capacitor/push-notifications';
+import { getAnalytics, logEvent } from "firebase/analytics";
 import key from '~/utils/key';
+import { capitalize } from 'vue';
 
 const notificationsListener = reactive({
   registration: null as null | Token,
@@ -9,7 +11,7 @@ const notificationsListener = reactive({
   pushNotificationActionPerformed: null as null | ActionPerformed
 })
 
-const notificationList: PushNotificationSchema[] = []
+//const notificationList = []
 
 const waitForPushNotifications = async () => {
   await PushNotifications.addListener('registration', token => {
@@ -21,14 +23,48 @@ const waitForPushNotifications = async () => {
   });
 
   await PushNotifications.addListener('pushNotificationReceived', async notification => {
-    console.log('Push notification received: ', notification);
+
+    notification.data.read = false
+    notification.data.date = setTime()
+
+    const jsonNotification = await key.getKey('notificationList')
+    let notificationList: PushNotificationSchema[] = []
+    if(jsonNotification) {
+      const jsonToObj = JSON.parse(jsonNotification)
+      if(jsonToObj) {
+        notificationList = jsonToObj
+      }
+    }
     notificationList.push(notification)
     await key.setKey('notificationList', JSON.stringify(notificationList))
-  });
+    window.dispatchEvent(new Event("NewPushNotification"))
+
+    const analytics = getAnalytics();
+    logEvent(analytics, 'notification_received');
+  })
 
   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {
     console.log('Push notification action performed', notification.actionId, notification.inputValue);
-  });
+  })
+}
+
+function setTime() {
+  const now = new Date()
+  let formatedDate: string = capitalize(now.toLocaleDateString('pt-BR', { weekday: 'short'}))
+
+  formatedDate += " "
+  if(now.getHours() < 10) {
+      formatedDate += `0${now.getHours()}`
+  } else {
+      formatedDate += now.getHours()
+  }
+  formatedDate += ":"
+  if(now.getMinutes() < 10) {
+      formatedDate += `0${now.getMinutes()}`
+  } else {
+      formatedDate += now.getMinutes()
+  }
+  return formatedDate
 }
 
 const getUserPermission = async () => {
@@ -51,28 +87,6 @@ const getDeliveredNotifications = async () => {
   return notificationList
 }
 
-const showNotificationPreVisualRequest = () => {
-  const alertComponent = {
-    header: "Não perca as novidades!",
-    message: "Ative as notificações para não perder nenhum novo achadinho" ,
-    buttons: [
-      {
-        text: "Não",
-        role: "cancel",
-        handler: () => console.log("Ativar notificações depois"),
-        cssClass: 'alert-button-cancel',
-      },
-      {
-        text: "Ativar agora",
-        role: "confirm",
-        handler: async () => await enableNotifications(),
-        cssClass: 'alert-button-confirm',
-      },
-    ],
-  }
-  createAlert(alertComponent)
-}
-
 const enableNotifications = async() => {
   await getUserPermission()
 }
@@ -82,6 +96,5 @@ export default {
   getUserPermission,
   getDeliveredNotifications,
   enableNotifications,
-  showNotificationPreVisualRequest,
   notificationsListener
 }

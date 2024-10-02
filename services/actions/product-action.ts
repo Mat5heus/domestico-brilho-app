@@ -74,11 +74,12 @@ function convertToProduct(data: Product): Product {
         data.id,
         data.name,
         data.image,
+        data.imageUrlBase64,
         data.desc, 
         data.date,
         data.videoDemo,
         new Links(data.links),
-        data?.likes
+        data?.likes,
     )
     return response
 }

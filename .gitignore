@@ -25,3 +25,6 @@ logs
 
 # development plan files
 develop-flow
+
+# android auto gerated files
+android

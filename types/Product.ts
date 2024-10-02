@@ -7,7 +7,8 @@ export interface ProductData {
     name: string
     desc: string
     links: Links
-    image: string
+    image: string | null
+    imageUrlBase64: string | null
     date: Timestamp
     likes: number | undefined
 }
@@ -66,9 +67,15 @@ export interface UseProduct {
 
     /**
      * Recupera a url da imagem do produto
-     * @returns a data no tipo `string` 
+     * @returns a data no tipo `string | null` 
      */
-    getImage: () => string
+    getImage: () => string | null
+
+    /**
+     * Recupera a url base64 da imagem do produto
+     * @returns a data no tipo `string | null` 
+     */
+    getUrlBase64: () => string | null
 
     /**
      * Recupera os likes do produto

@@ -4,7 +4,7 @@
     <ion-title>{{ title }}</ion-title>
     <ion-buttons slot="end">
       <ion-button @click="close">
-        <ion-text>Fechar</ion-text>
+        <ion-text>{{ $t("Close") }}</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

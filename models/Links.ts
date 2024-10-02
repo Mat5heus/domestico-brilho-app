@@ -10,10 +10,9 @@ export class Links implements UseLinks, LinksData {
             this.aliexpress = links.aliexpress
             this.shopee = links.shopee
         } catch(e) {
-            console.error("Não foi possivel obter os links do produto"+e)
+            console.error("Não foi possivel obter os links do produto: "+e)
             throw new Error("Problema nas instanciação de links")
         }
-        
     }
 
     public getAliexpress() {
@@ -23,4 +22,8 @@ export class Links implements UseLinks, LinksData {
     public getShopee() {
         return this.shopee
     }
+}
+
+export default {
+    Links
 }

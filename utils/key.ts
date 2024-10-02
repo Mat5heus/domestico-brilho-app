@@ -12,8 +12,8 @@ async function setKey(key: string, value: String): Promise<void> {
   }
 }
 
-async function getKey(key: string): Promise<undefined | string> {
-  let response: string | undefined
+async function getKey(key: string): Promise<string | null> {
+  let response: string | null
   try {
     await storage.create()
     response = String(
@@ -22,10 +22,32 @@ async function getKey(key: string): Promise<undefined | string> {
     return response
   } catch(error) {
     console.error("Error function getKey(): "+error)
+    return null
   }
 }
 
+async function deleteKey(key: string): Promise<void> {
+  try {
+    await storage.create()
+    await storage.remove(key)
+  } catch(error) {
+    console.error("Error function removeKey(): "+error)
+  }
+}
+
+async function deleteAllKeys(): Promise<void> {
+  try {
+    await storage.create()
+    await storage.clear()
+  } catch(error) {
+    console.error("Error function clearKey(): "+error)
+  }
+}
+
+
 export default {
   getKey,
-  setKey
+  setKey,
+  deleteKey,
+  deleteAllKeys
 }
