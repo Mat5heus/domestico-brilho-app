@@ -1,7 +1,5 @@
 # Doméstico Brilho ✨
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/08c72554-f8f8-4815-8c22-806441ab69d0" width="15%"></img><br/>
-</p>
+<img src="https://github.com/user-attachments/assets/08c72554-f8f8-4815-8c22-806441ab69d0" width="15%"></img><br/>
 Bem-vindo ao Doméstico Brilho, o seu novo companheiro para descobrir achadinhos incríveis que você nem imaginava que existiam! Nosso app é perfeito para quem adora encontrar produtos úteis e inovadores que fazem toda a diferença no dia a dia.
 
 
